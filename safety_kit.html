@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>數位急救包 | Digital First Aid Kit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        :root {
+            --bg-color: #FFFDF5;
+            --ink-color: #18181b;
+            --pop-red: #FF1744;
+            --pop-yellow: #FFEB3B;
+        }
+        
+        .neo-card {
+            background: white;
+            border: 3px solid var(--ink-color);
+            box-shadow: 4px 4px 0px 0px var(--ink-color);
+            border-radius: 12px;
+        }
+
+        .resource-btn {
+            border: 2px solid var(--ink-color);
+            background: white;
+            transition: all 0.2s;
+            box-shadow: 2px 2px 0px 0px var(--ink-color);
+        }
+        .resource-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px 0px var(--ink-color);
+        }
+    </style>
+</head>
+<body class="bg-[#FFFDF5] text-[#18181b] min-h-screen p-4 md:p-8 flex items-center justify-center">
+
+    <div class="max-w-md w-full">
+        
+        <!-- Header -->
+        <header class="text-center mb-6">
+            <div class="inline-block bg-[#FF1744] text-white px-3 py-1 text-xs font-black transform -rotate-2 border-2 border-black mb-2">
+                EMERGENCY KIT
+            </div>
+            <h1 class="text-3xl font-black mb-2">數位急救包 🚑</h1>
+            <p class="text-sm font-bold text-gray-500">發生私密影像外流時，請保持冷靜</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="neo-card p-6 bg-white border-dashed border-[#FF1744]">
+            
+            <!-- SOP Section -->
+            <div class="mb-8">
+                <h2 class="text-lg font-black mb-4 flex items-center gap-2">
+                    <span class="bg-black text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
+                    黃金三步驟 (SOP)
+                </h2>
+                
+                <div class="grid grid-cols-3 gap-3 text-center">
+                    <div class="bg-[#FFEBEE] p-3 rounded-lg border-2 border-[#FF1744]">
+                        <div class="text-2xl mb-1">📸</div>
+                        <div class="font-black text-xs text-[#D50000]">1. 截圖</div>
+                        <div class="text-[10px] font-bold text-gray-500 leading-tight mt-1">保留對話與影像證據</div>
+                    </div>
+                    <div class="bg-[#FFEBEE] p-3 rounded-lg border-2 border-[#FF1744]">
+                        <div class="text-2xl mb-1">🔗</div>
+                        <div class="font-black text-xs text-[#D50000]">2. 複製</div>
+                        <div class="text-[10px] font-bold text-gray-500 leading-tight mt-1">複製網址與帳號連結</div>
+                    </div>
+                    <div class="bg-[#FFEBEE] p-3 rounded-lg border-2 border-[#FF1744]">
+                        <div class="text-2xl mb-1">🛑</div>
+                        <div class="font-black text-xs text-[#D50000]">3. 不刪</div>
+                        <div class="text-[10px] font-bold text-gray-500 leading-tight mt-1">千萬不要刪除帳號</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Section -->
+            <div>
+                <h2 class="text-lg font-black mb-4 flex items-center gap-2">
+                    <span class="bg-black text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
+                    求助管道
+                </h2>
+                
+                <div class="space-y-3">
+                    <a href="https://tw-ncii.win.org.tw/" target="_blank" class="resource-btn block p-4 rounded-lg flex items-center justify-between group">
+                        <div>
+                            <div class="font-black text-lg text-indigo-600">私ME (Tw-ncii)</div>
+                            <div class="text-xs font-bold text-gray-500">私密影像處理中心 | 協助下架</div>
+                        </div>
+                        <span class="text-xl group-hover:translate-x-1 transition">➜</span>
+                    </a>
+
+                    <a href="https://i.win.org.tw/" target="_blank" class="resource-btn block p-4 rounded-lg flex items-center justify-between group">
+                        <div>
+                            <div class="font-black text-lg text-green-600">iWIN</div>
+                            <div class="text-xs font-bold text-gray-500">網路內容防護機構 | 申訴霸凌</div>
+                        </div>
+                        <span class="text-xl group-hover:translate-x-1 transition">➜</span>
+                    </a>
+
+                    <a href="tel:113" class="resource-btn block p-4 rounded-lg flex items-center justify-between group bg-gray-50">
+                        <div>
+                            <div class="font-black text-lg text-red-600">113 保護專線</div>
+                            <div class="text-xs font-bold text-gray-500">24小時 | 性騷擾與暴力諮詢</div>
+                        </div>
+                        <span class="text-xl">📞</span>
+                    </a>
+                </div>
+            </div>
+
+        </main>
+
+        <div class="mt-6 text-center">
+            <a href="index.html" class="inline-block text-xs font-bold text-gray-400 underline hover:text-black">
+                ← 返回測驗
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

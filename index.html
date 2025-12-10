@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你是哪種數位守護者？ | 互動測驗</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        
+        /* Neo-Pop 色票 */
+        :root {
+            --bg-color: #FFFDF5;
+            --ink-color: #18181b;
+            --pop-yellow: #FFEB3B;
+            --pop-pink: #FF80AB;
+            --pop-blue: #4DD0E1;
+            --pop-purple: #BA68C8;
+            --pop-green: #00E676;
+        }
+
+        /* 互動卡片樣式 */
+        .quiz-card {
+            background: white;
+            border: 3px solid var(--ink-color);
+            box-shadow: 6px 6px 0px 0px var(--ink-color);
+            border-radius: 12px;
+            transition: transform 0.1s;
+        }
+        
+        /* 選項按鈕樣式 */
+        .option-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 2px solid var(--ink-color);
+            border-radius: 8px;
+            background: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        /* 選中狀態 */
+        .option-btn.selected {
+            background-color: var(--pop-yellow);
+            box-shadow: 2px 2px 0px 0px var(--ink-color);
+            transform: translate(-2px, -2px);
+        }
+
+        .option-btn:hover {
+            background-color: #F5F5F5;
+        }
+
+        /* 結果區塊動畫 */
+        .result-section {
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 進度條 */
+        .progress-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--ink-color);
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--pop-blue);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-[#FFFDF5] text-[#18181b] min-h-screen p-4 md:p-8 flex items-center justify-center">
+
+    <div class="max-w-md w-full">
+        
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <span class="bg-black text-white px-3 py-1 text-xs font-bold transform -rotate-2 inline-block mb-2"># 數位性平專題</span>
+            <h1 class="text-3xl font-black mb-2" style="text-shadow: 2px 2px 0px var(--pop-pink);">你是哪種守護者？</h1>
+            <p class="text-sm font-bold text-gray-500">面對孩子的私密困境，測測你的直覺反應</p>
+        </header>
+
+        <!-- Quiz Container -->
+        <main id="quiz-container" class="quiz-card p-6 mb-6">
+            
+            <!-- Progress -->
+            <div class="mb-6">
+                <div class="flex justify-between text-xs font-black mb-1">
+                    <span id="question-count">Question 1/5</span>
+                    <span id="progress-text">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill" style="width: 20%"></div>
+                </div>
+            </div>
+
+            <!-- Question Area -->
+            <div id="question-box">
+                <h2 id="question-text" class="text-xl font-black mb-6 min-h-[60px]">正在載入題目...</h2>
+                <div id="options-area">
+                    <!-- Options will be injected here -->
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Result Container (Hidden initially) -->
+        <div id="result-container" class="result-section quiz-card p-6 bg-white border-dashed border-[#FF1744]">
+            <div class="text-center">
+                <div class="w-20 h-20 bg-[#BA68C8] rounded-full border-4 border-black mx-auto flex items-center justify-center text-4xl mb-4 shadow-[4px_4px_0px_0px_#000]">
+                    <span id="result-icon">🛡️</span>
+                </div>
+                <h2 class="text-2xl font-black mb-1">你的類型是：</h2>
+                <h3 id="result-title" class="text-xl font-black text-[#D50000] mb-4 bg-[#FFEBEE] inline-block px-3 py-1 rounded">嚴格守門員</h3>
+                
+                <p id="result-desc" class="text-sm font-bold text-gray-600 mb-6 leading-relaxed text-left bg-gray-50 p-4 rounded border-2 border-black">
+                    你的出發點是保護，但過度的禁止可能會讓孩子關上心門。
+                </p>
+
+                <div class="border-t-2 border-dashed border-gray-300 pt-4">
+                    <p class="text-xs font-black text-gray-400 mb-2">給您的建議行動：</p>
+                    <a href="safety_kit.html" class="block w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition shadow-[4px_4px_0px_0px_#4DD0E1]">
+                        領取數位急救包 ➜
+                    </a>
+                </div>
+                
+                <button onclick="location.reload()" class="mt-4 text-xs font-bold text-gray-400 underline">重新測驗</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 題目資料 (新增至 5 題)
+        const questions = [
+            {
+                q: "Q1. 學生/孩子收到私密照，你的第一反應？",
+                options: [
+                    { text: "😠 立刻報警，絕不姑息！", score: 1 },
+                    { text: "😟 強烈要求刪除，講述後果。", score: 3 },
+                    { text: "🤝 先詢問孩子，討論如何處理。", score: 5 }
+                ]
+            },
+            {
+                q: "Q2. 你認為性教育的首要目標是？",
+                options: [
+                    { text: "🚫 防止發生性行為。", score: 1 },
+                    { text: "⚖️ 教導法律規範與刑責。", score: 3 },
+                    { text: "🌱 培養身體與情感的自主權和安全意識。", score: 5 }
+                ]
+            },
+            {
+                q: "Q3. 對「自拍私密照」的看法？",
+                options: [
+                    { text: "❌ 絕對禁止，傷風敗俗。", score: 1 },
+                    { text: "🤔 不鼓勵，但理解是探索過程。", score: 3 },
+                    { text: "✅ 重點不在拍不拍，在於知情同意。", score: 5 }
+                ]
+            },
+            {
+                q: "Q4. 孩子問：「如果對方要求我不穿衣服視訊，我該怎麼辦？」",
+                options: [
+                    { text: "😡 罵他一頓：你想都別想！", score: 1 },
+                    { text: "😨 警告他：這樣會被側錄外流喔。", score: 3 },
+                    { text: "🛡️ 討論感受：教導如何設立界線與拒絕。", score: 5 }
+                ]
+            },
+            {
+                q: "Q5. 發現孩子群組在傳別人的私密照，你會教他？",
+                options: [
+                    { text: "😶 假裝沒看到，不要惹事。", score: 1 },
+                    { text: "👋 退群組保平安。", score: 3 },
+                    { text: "🛑 不轉傳、不點閱，成為積極旁觀者。", score: 5 }
+                ]
+            }
+        ];
+
+        let currentQ = 0;
+        let totalScore = 0;
+
+        function loadQuestion() {
+            const q = questions[currentQ];
+            document.getElementById('question-text').innerText = q.q;
+            document.getElementById('question-count').innerText = `Question ${currentQ + 1}/${questions.length}`;
+            
+            // Update Progress
+            const progress = ((currentQ + 1) / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+            document.getElementById('progress-text').innerText = `${Math.round(progress)}%`;
+
+            // Render Options
+            const optionsHtml = q.options.map((opt, index) => `
+                <button class="option-btn" onclick="selectOption(${index}, ${opt.score})">
+                    ${opt.text}
+                </button>
+            `).join('');
+            document.getElementById('options-area').innerHTML = optionsHtml;
+        }
+
+        function selectOption(index, score) {
+            // Visual feedback
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons[index].classList.add('selected');
+            
+            // Add score
+            totalScore += score;
+
+            // Delay for next question
+            setTimeout(() => {
+                currentQ++;
+                if (currentQ < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResult();
+                }
+            }, 400);
+        }
+
+        function showResult() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('result-container').style.display = 'block';
+
+            const title = document.getElementById('result-title');
+            const desc = document.getElementById('result-desc');
+            const icon = document.getElementById('result-icon');
+
+            // 調整計分區間 (總分 25 分)
+            // 5-13: 嚴格
+            // 14-19: 理性
+            // 20-25: 賦權
+            if (totalScore <= 13) {
+                icon.innerText = "🛡️";
+                title.innerText = "嚴格守門員";
+                title.className = "text-xl font-black text-[#D50000] mb-4 bg-[#FFEBEE] inline-block px-3 py-1 rounded border-2 border-black";
+                desc.innerHTML = "你的出發點是絕對的保護，但高牆可能會阻擋孩子求助的路。<br><br><strong>建議：</strong>試著多一點傾聽，先別急著責備，避免將孩子推向地下化。";
+            } else if (totalScore <= 19) {
+                icon.innerText = "🧭";
+                title.innerText = "理性引導者";
+                title.className = "text-xl font-black text-[#FF6D00] mb-4 bg-[#FFF3E0] inline-block px-3 py-1 rounded border-2 border-black";
+                desc.innerHTML = "你能理解現實的複雜性，並試圖講道理。<br><br><strong>建議：</strong>試著將外部的規則，轉化為孩子內在的判斷力，讓他們學會自己踩煞車。";
+            } else {
+                icon.innerText = "🤝";
+                title.innerText = "賦權同行者";
+                title.className = "text-xl font-black text-[#00695C] mb-4 bg-[#E0F2F1] inline-block px-3 py-1 rounded border-2 border-black";
+                desc.innerHTML = "太棒了！你是孩子最信任的對象。<br><br><strong>建議：</strong>你正在培養孩子的「數位韌性」。請繼續保持開放的對話，成為他們最堅強的後盾。";
+            }
+        }
+
+        // Init
+        loadQuestion();
+    </script>
+</body>
+</html>
